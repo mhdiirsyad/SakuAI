@@ -1,4 +1,4 @@
-import CurrencyPicker, { ALL_CURRENCIES } from '@/components/currecnyPicker'
+import CurrencyPicker, { ALL_CURRENCIES } from '@/components/currencyPicker'
 import { useSupabase } from '@/hooks/useSupabase'
 import { OnBoardingFormSchema, onboardingSchema } from '@/lib/schemas/oboarding'
 import { useUserStore } from '@/store/userStore'
