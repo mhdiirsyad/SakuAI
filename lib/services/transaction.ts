@@ -42,3 +42,75 @@ export async function getTransactions(
     if (error) throw error
     return data as Transaction[]
 }
+
+export async function deleteTransaction(
+    supabase: SupabaseClient,
+    transactionId: string,
+    accountId: string,
+    amount: number,
+    type: TransactionType,
+) {
+    const { error: deleteError } = await supabase.from('transactions')
+        .delete()
+        .eq('id', transactionId)
+
+    if (deleteError) return { error: deleteError }
+
+    const { data: accountBalance, error: balanceError } = await supabase.from('accounts')
+        .select('balance')
+        .eq('id', accountId)
+        .single()
+
+    if (balanceError) return { error: balanceError }
+
+    const delta = type === 'INCOME' ? -amount : amount
+
+    const { error: updateError } = await supabase.from('accounts')
+        .update({ balance: accountBalance.balance + delta })
+        .eq('id', accountId)
+
+    if (updateError) return { error: updateError }
+
+    return { error: null }
+}
+
+export type NewTransaction = {
+    user_id: string;
+    account_id: string;
+    type: TransactionType;
+    amount: number;
+    category: CategoryKey;
+    description: string | null;
+    date: string;
+    input_method: InputMethod;
+    voice_transcript: string | null;
+}
+
+export async function createTransaction(
+    supabase: SupabaseClient,
+    payload: NewTransaction
+) {
+    const {data: insertData, error: insertError} = await supabase.from("transactions")
+    .insert(payload)
+    .select()
+    .single()
+
+    if(insertError) return {transaction: null, error: insertError}
+
+    const { data: accountBalance, error: balanceError } = await supabase.from('accounts')
+        .select('balance')
+        .eq('id', payload.account_id)
+        .single()
+
+    if (balanceError) return { error: balanceError }
+
+    const delta = payload.type === 'INCOME' ? -payload.amount : payload.amount
+
+    const { error: updateError } = await supabase.from('accounts')
+        .update({ balance: accountBalance.balance + delta })
+        .eq('id', payload.account_id)
+
+    if (updateError) return { error: updateError }
+
+    return {transaction: insertData as Transaction, error: null}
+}
