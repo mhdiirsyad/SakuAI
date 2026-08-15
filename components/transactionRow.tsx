@@ -67,14 +67,14 @@ export default function TransactionRow({ tx, onDelete }: { tx: Transaction; onDe
         overshootRight={false}
         renderRightActions={() => (
           <TouchableOpacity
-          onPress={onDelete}
-          className="bg-brand-coral justify-center items-center rounded-xl ml-2 w-16 px-4"
+            onPress={onDelete}
+            className="bg-brand-coral justify-center items-center rounded-xl ml-2 w-16 px-4"
           >
             <Feather name="trash-2" size={24} color="white" />
           </TouchableOpacity>
         )}
       >
-      {row}
+        {row}
       </Swipeable>
     </View>
   )
