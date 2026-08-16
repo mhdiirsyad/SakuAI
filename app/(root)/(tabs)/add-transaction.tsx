@@ -2,6 +2,7 @@ import AIActionCard from '@/components/aiActionCard'
 import DatePicker from '@/components/datePicker'
 import PillGroup from '@/components/pillGroup'
 import ScannerModal from '@/components/scannerModal'
+import VoiceRecorderModal from '@/components/voiceRecorderModal'
 import { CategoryKey, EXPENSE_CATEGORIES, INCOME_CATEGORIES } from '@/constants/category'
 import { AI_GRADIENT, AI_GRADIENT_REVERSE } from '@/constants/theme'
 import { useInsertTransaction } from '@/hooks/mutations/useTransactionMutation'
@@ -157,6 +158,23 @@ export default function AddTransactionScreen() {
       setScanning(false);
     }
   }
+
+  const handleVoiceRecorded = async (extracted: ExtractedTransaction) => {
+    applyExtraction(extracted);
+    setInputMethod("VOICE");
+    setVoiceTranscript(extracted.transcript)
+  }
+
+  useEffect(() => {
+    if(params.action === "scan") {
+      setScannerOpen(true)
+      router.setParams({action: undefined})
+    } else if (params.action === "voice") {
+      setVoiceModalOpen(true)
+      router.setParams({action: undefined})
+    }
+  }, [params.action, router])
+
   useEffect(() => {
     if (accounts.length > 0) {
       resetForm(DEFAULT_VALUES(accounts))
@@ -343,6 +361,12 @@ export default function AddTransactionScreen() {
         visible={scannerOpen}
         onClose={() => setScannerOpen(false)}
         onCaptured={handleRecieptCaptured}
+      />
+
+      <VoiceRecorderModal 
+        visible={voiceModalOpen}
+        onClose={() => setVoiceModalOpen(false)}
+        onExtracted={handleVoiceRecorded}
       />
     </SafeAreaView>
   )

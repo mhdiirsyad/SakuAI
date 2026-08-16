@@ -104,7 +104,7 @@ export async function createTransaction(
 
     if (balanceError) return { error: balanceError }
 
-    const delta = payload.type === 'INCOME' ? -payload.amount : payload.amount
+    const delta = payload.type === 'INCOME' ? payload.amount : -payload.amount
 
     const { error: updateError } = await supabase.from('accounts')
         .update({ balance: accountBalance.balance + delta })
