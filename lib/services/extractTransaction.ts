@@ -49,7 +49,6 @@ export async function callGemini(promptText: string, inlineData: { mimeType: str
 
     const data = await res.json()
     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text
-    console.log(data.candidates?.[0]?.content?.parts)
     if (!text) throw new Error('No Response From Gemini')
 
     return JSON.parse(text) as ExtractedTransaction
