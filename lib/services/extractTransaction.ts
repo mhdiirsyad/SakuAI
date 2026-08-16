@@ -15,7 +15,7 @@ const RESPONSE_SCHEMA = {
     type: "object",
     properties: {
         type: { type: "string", enum: ["EXPENSE", "INCOME"], nullable: true },
-        category: { type: "string", enum: [...CATEGORY_KEYS_INCOME, ...CATEGORY_KEYS_EXPENSE], nullabe: true },
+        category: { type: "string", enum: [...CATEGORY_KEYS_INCOME, ...CATEGORY_KEYS_EXPENSE], nullable: true },
         amount: { type: "number", nullable: true },
         description: { type: "string", nullable: true },
         date: { type: "string", nullable: true },
@@ -48,7 +48,7 @@ export async function callGemini(promptText: string, inlineData: { mimeType: str
     }
 
     const data = await res.json()
-    const text = data?.candidates?.[0]?.content?.parts?.text
+    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text
     if (!text) throw new Error('No Response From Gemini')
 
     return JSON.parse(text) as ExtractedTransaction
