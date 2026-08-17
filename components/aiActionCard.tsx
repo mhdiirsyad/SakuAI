@@ -88,7 +88,7 @@ export default function AIActionCard({
                         <Feather name={icon} size={16} color="white" />
                     </View>
                     <Text className='text-white text-lg font-bold mt-2'>{title}</Text>
-                    <Text className='text-white/80 text-sm mt-1'>{subtitle}</Text>
+                    <Text className='text-white/80 text-xs mt-1'>{subtitle}</Text>
                 </View>
             </View>
         </TouchableOpacity>

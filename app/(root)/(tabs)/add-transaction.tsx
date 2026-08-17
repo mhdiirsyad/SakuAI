@@ -200,7 +200,8 @@ export default function AddTransactionScreen() {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{
               paddingBottom: 100,
-              paddingHorizontal: 20
+              paddingHorizontal: 20,
+              paddingTop: 10
             }}
           >
             <View className="flex-row gap-4">
@@ -216,7 +217,7 @@ export default function AddTransactionScreen() {
                 onPress={() => setVoiceModalOpen(true)}
                 title='Voice Input'
                 colors={AI_GRADIENT_REVERSE}
-                subtitle='masukkan transaksi dengan suara'
+                subtitle='masukkan dengan suara'
               />
             </View>
 
@@ -290,7 +291,7 @@ export default function AddTransactionScreen() {
             </View>
             {/* Date */}
             <View className="mb-4">
-              <Text className="text-brand-bg text-lg font-semibold">Rekening</Text>
+              <Text className="text-brand-bg text-lg font-semibold">Tanggal</Text>
               <TouchableOpacity
                 onPress={() => setDatePickerOpen((v) => !v)}
                 className="bg-white border border-brand-text-primary rounded-lg py-2.5 px-3 items-center justify-between flex-row"

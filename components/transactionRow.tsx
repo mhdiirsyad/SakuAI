@@ -1,6 +1,7 @@
 import { getCategoryConfig } from '@/constants/category';
 import { Transaction } from '@/lib/services/transaction';
 import { formatPrice } from '@/lib/utils';
+import { useUserStore } from '@/store/userStore';
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
@@ -14,6 +15,7 @@ const INPUT_METHOD: Record<Transaction['input_method'], keyof typeof Feather.gly
 export default function TransactionRow({ tx, onDelete }: { tx: Transaction; onDelete?: () => void }) {
   const config = getCategoryConfig(tx.category);
   const isIncome = tx.type === 'INCOME';
+  const currency = useUserStore((state) => state.currency);
 
   const row = (
     <View
@@ -51,7 +53,7 @@ export default function TransactionRow({ tx, onDelete }: { tx: Transaction; onDe
         className={`text-lg font-semibold ${isIncome ? 'text-brand-success' : 'text-brand-coral'}`}
       >
         {isIncome ? '+' : '-'}
-        {formatPrice(tx.amount)}
+        {formatPrice(tx.amount, currency)}
       </Text>
     </View>
   )

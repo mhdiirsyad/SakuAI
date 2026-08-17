@@ -48,7 +48,7 @@ export default function CurrencyPicker({
                     <TextInput 
                         value={search}
                         onChangeText={setSearch}
-                        className="flex-1 border-gray-200 rounded-xl border text-brand-bg"
+                        className="flex-1 border-gray-200 rounded-xl border text-brand-bg px-3"
                         placeholder='Cari mata uang'
                         placeholderTextColor="#8A8D96"
                         autoFocus
