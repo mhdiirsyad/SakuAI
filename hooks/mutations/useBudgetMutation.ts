@@ -12,7 +12,7 @@ export function useBudgetUpsert() {
         mutationFn: (amount: number) => upsertBudget(supabase, user!.id, amount),
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: ['budget']
+                queryKey: ['budgets']
             })
         }
     })
